@@ -1,25 +1,70 @@
+import { useState } from "react";
+import { Info } from "lucide-react";
+
 import { AppHeader } from "@/components/AppHeader/AppHeader";
-import { useAppForm } from "@/components/Form/form";
+import { useAppForm } from "@/form/form";
 import { RequestSummary } from "@/components/RequestSummary/RequestSummary";
+import { SuccessScreen } from "@/components/SuccessScreen/SuccessScreen";
 import { requestFormOptions } from "@/form/request.options";
+import { validateRequest } from "@/form/request.schemas";
+import {
+  submitPassengerAssistanceRequest,
+  type SubmissionResult,
+} from "@/services/passenger-assistance.service";
 import { ActiveStep } from "@/stepper/ActiveStep";
 import { FormStateBridge } from "@/stepper/FormStateBridge";
 import { StepperFooter } from "@/stepper/StepperFooter";
 import { StepperProvider } from "@/stepper/StepperProvider";
 import { StepProgress } from "@/stepper/StepProgress";
-import { Info } from "lucide-react";
+import { useStepper } from "@/stepper/StepperContext";
 
-function PassengerAssistanceRequest() {
+export function PassengerAssistanceRequest() {
+  return (
+    <StepperProvider>
+      <RequestFormOwner />
+    </StepperProvider>
+  );
+}
+
+function RequestFormOwner() {
+  const [submissionResult, setSubmissionResult] =
+    useState<SubmissionResult | null>(null);
+  const { resetFlow } = useStepper();
+
   const form = useAppForm({
     ...requestFormOptions,
 
+    validators: {
+      onSubmit: ({ value }) => validateRequest(value),
+    },
+
     onSubmit: async ({ value }) => {
-      console.log("Submitted request:", value);
+      const result = await submitPassengerAssistanceRequest(value);
+      setSubmissionResult(result);
     },
   });
 
+  function handleCreateAnother() {
+    form.reset();
+    resetFlow();
+    setSubmissionResult(null);
+  }
+
+  if (submissionResult) {
+    return (
+      <div className="flex min-h-screen flex-col bg-[#f6f8fc] text-[#111b45]">
+        <AppHeader />
+        <SuccessScreen
+          result={submissionResult}
+          onCreateAnother={handleCreateAnother}
+        />
+        <AppFooter />
+      </div>
+    );
+  }
+
   return (
-    <StepperProvider>
+    <>
       <FormStateBridge form={form} />
 
       <div className="min-h-screen bg-[#f6f8fc] text-[#111b45]">
@@ -53,11 +98,17 @@ function PassengerAssistanceRequest() {
           </div>
         </main>
 
-        <footer className="pb-8 pt-2 text-center text-xs text-slate-500">
-          &c; 2026 AirPortCare. All rights reserved.
-        </footer>
+        <AppFooter />
       </div>
-    </StepperProvider>
+    </>
+  );
+}
+
+function AppFooter() {
+  return (
+    <footer className="pb-8 pt-2 text-center text-xs text-slate-500">
+      &copy; 2026 AirPortCare. All rights reserved.
+    </footer>
   );
 }
 

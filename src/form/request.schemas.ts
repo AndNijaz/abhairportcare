@@ -182,3 +182,26 @@ export function validateAssistanceNeeds(
     ? { fields }
     : undefined;
 }
+
+export function validateRequest(
+  value: PassengerAssistanceRequest,
+) {
+  const passengerErrors =
+    validatePassengerDetails(value.passengerDetails);
+
+  const flightErrors =
+    validateFlightDetails(value.flightDetails);
+
+  const assistanceErrors =
+    validateAssistanceNeeds(value.assistanceNeeds);
+
+  if (
+    passengerErrors ||
+    flightErrors ||
+    assistanceErrors
+  ) {
+    return "Please complete all required information before submitting.";
+  }
+
+  return undefined;
+}

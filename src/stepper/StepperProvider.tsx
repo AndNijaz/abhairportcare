@@ -20,6 +20,10 @@ const initialFormSnapshot: FormUiSnapshot = {
   assistance: {
     typeLabel: "",
   },
+
+  submission: {
+    isSubmitting: false,
+  },
 };
 
 type StepperProviderProps = {
@@ -39,6 +43,12 @@ export function StepperProvider({ children }: StepperProviderProps) {
   const [completedSteps, setCompletedSteps] = useState<Set<StepId>>(
     () => new Set()
   );
+
+  const resetFlow = useCallback(() => {
+    setActiveStep("passengerDetails");
+    setCompletedSteps(new Set());
+    setFormSnapshot(initialFormSnapshot);
+  }, []);
 
   const activeStepIndex = steps.findIndex((step) => step.id === activeStep);
 
@@ -67,7 +77,19 @@ export function StepperProvider({ children }: StepperProviderProps) {
     });
   }, []);
 
-  const goToStep = useCallback((step: StepId) => {
+  const editStep = useCallback((step: StepId) => {
+    const targetIndex = steps.findIndex((item) => item.id === step);
+
+    setCompletedSteps((current) => {
+      const next = new Set(current);
+
+      for (let index = targetIndex; index < steps.length; index++) {
+        next.delete(steps[index].id);
+      }
+
+      return next;
+    });
+
     setActiveStep(step);
   }, []);
 
@@ -102,7 +124,8 @@ export function StepperProvider({ children }: StepperProviderProps) {
       completeStep,
       goNext,
       goBack,
-      goToStep,
+      editStep,
+      resetFlow,
       getStepStatus,
     }),
     [
@@ -114,7 +137,8 @@ export function StepperProvider({ children }: StepperProviderProps) {
       completeStep,
       goNext,
       goBack,
-      goToStep,
+      editStep,
+      resetFlow,
       getStepStatus,
     ]
   );

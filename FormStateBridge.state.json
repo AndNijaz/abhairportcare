@@ -1,0 +1,198 @@
+{
+  "workspaceFoldersFilePaths": [
+    "c:\\Users\\andel\\Nijaz\\Desktop\\abhairportcare/"
+  ],
+  "symbols": [],
+  "activeFileDiagnostics": [],
+  "activeTextEditor": {
+    "selections": [
+      {
+        "anchor": {
+          "line": 25,
+          "character": 4
+        },
+        "active": {
+          "line": 25,
+          "character": 4
+        },
+        "isReversed": true
+      }
+    ],
+    "documentFilePath": "c:\\Users\\andel\\Nijaz\\Desktop\\abhairportcare\\src\\stepper\\StepperProvider.tsx",
+    "visibleRanges": [
+      {
+        "start": {
+          "line": 0,
+          "character": 0
+        },
+        "end": {
+          "line": 32,
+          "character": 69
+        }
+      }
+    ],
+    "languageId": "typescriptreact"
+  },
+  "debugConsoleOutput": "",
+  "terminalBuffer": "⠹\r\n> abhairportcare@0.0.0 dev\r\n> vite\r\n\r\n⠹\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n  VITE v8.2.1  ready in 2466 ms\r\n\r\n  ➜  Local:   http://localhost:5173/\r\n  ➜  Network: use --host to expose\r\n  ➜  press h + enter to show help\r\n",
+  "terminalSelection": "",
+  "terminalShellType": "node",
+  "repoContexts": [
+    {
+      "_repo": {
+        "rootUri": {
+          "$mid": 1,
+          "path": "/c:/Users/andel/Nijaz/Desktop/abhairportcare",
+          "scheme": "file"
+        },
+        "inputBox": {},
+        "kind": "repository",
+        "state": {},
+        "ui": {},
+        "isUsingVirtualFileSystem": false
+      },
+      "rootUri": {
+        "$mid": 1,
+        "path": "/c:/Users/andel/Nijaz/Desktop/abhairportcare",
+        "scheme": "file"
+      },
+      "kind": "repository",
+      "isUsingVirtualFileSystem": false,
+      "headBranchName": "main",
+      "headCommitHash": "4b63c32c65c56914b0a1af57c2e16969f1666028",
+      "headIncomingChanges": 0,
+      "headOutgoingChanges": 0,
+      "upstreamBranchName": "main",
+      "upstreamRemote": "origin",
+      "isRebasing": true,
+      "remotes": [
+        "origin"
+      ],
+      "remoteFetchUrls": [
+        "https://github.com/AndNijaz/abhairportcare.git"
+      ],
+      "worktrees": [
+        {
+          "name": "abhairportcare",
+          "path": "c:\\Users\\andel\\Nijaz\\Desktop\\abhairportcare",
+          "ref": "refs/heads/main",
+          "detached": false,
+          "main": true
+        }
+      ],
+      "changes": {
+        "mergeChanges": [],
+        "indexChanges": [],
+        "workingTree": [
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {}
+        ],
+        "untrackedChanges": []
+      },
+      "_onDidChangeSignal": {
+        "_observers": {},
+        "debugName": "Observable Signal From Event"
+      },
+      "headBranchNameObs": {
+        "_observers": {},
+        "_debugNameData": {},
+        "_state": 0,
+        "_updateCount": 0,
+        "_dependencies": {},
+        "_dependenciesToBeRemoved": {},
+        "_isUpdating": false,
+        "_isComputing": false,
+        "_didReportChange": false,
+        "_isInBeforeUpdate": false,
+        "_isReaderValid": false,
+        "_removedObserverToCallEndUpdateOn": null
+      },
+      "headCommitHashObs": {
+        "_observers": {},
+        "_debugNameData": {},
+        "_state": 0,
+        "_updateCount": 0,
+        "_dependencies": {},
+        "_dependenciesToBeRemoved": {},
+        "_isUpdating": false,
+        "_isComputing": false,
+        "_didReportChange": false,
+        "_isInBeforeUpdate": false,
+        "_isReaderValid": false,
+        "_removedObserverToCallEndUpdateOn": null
+      },
+      "upstreamBranchNameObs": {
+        "_observers": {},
+        "_debugNameData": {},
+        "_state": 0,
+        "_updateCount": 0,
+        "_dependencies": {},
+        "_dependenciesToBeRemoved": {},
+        "_isUpdating": false,
+        "_isComputing": false,
+        "_didReportChange": false,
+        "_isInBeforeUpdate": false,
+        "_isReaderValid": false,
+        "_removedObserverToCallEndUpdateOn": null
+      },
+      "upstreamRemoteObs": {
+        "_observers": {},
+        "_debugNameData": {},
+        "_state": 0,
+        "_updateCount": 0,
+        "_dependencies": {},
+        "_dependenciesToBeRemoved": {},
+        "_isUpdating": false,
+        "_isComputing": false,
+        "_didReportChange": false,
+        "_isInBeforeUpdate": false,
+        "_isReaderValid": false,
+        "_removedObserverToCallEndUpdateOn": null
+      },
+      "isRebasingObs": {
+        "_observers": {},
+        "_debugNameData": {},
+        "_state": 0,
+        "_updateCount": 0,
+        "_dependencies": {},
+        "_dependenciesToBeRemoved": {},
+        "_isUpdating": false,
+        "_isComputing": false,
+        "_didReportChange": false,
+        "_isInBeforeUpdate": false,
+        "_isReaderValid": false,
+        "_removedObserverToCallEndUpdateOn": null
+      },
+      "_checkIsIgnored": {
+        "_waitingTimeMs": 1000,
+        "_queue": [],
+        "_timeout": null
+      },
+      "_isIgnored": {
+        "_map": {},
+        "_map2": {}
+      }
+    }
+  ],
+  "notebookDocumentFilePaths": [],
+  "textDocumentFilePaths": [
+    "snippets.ts",
+    "src/stepper/step-form-ids.ts",
+    "src/stepper/stepper.config.ts",
+    "src/form/request.schemas.ts",
+    "src/app/PassengerAssistanceRequest.tsx",
+    "src/features/review/ReviewStep.tsx",
+    "src/stepper/ActiveStep.tsx",
+    "src/stepper/StepperFooter.tsx",
+    "src/stepper/stepper.types.ts",
+    "src/stepper/StepperContext.tsx",
+    "src/stepper/StepperProvider.tsx"
+  ]
+}

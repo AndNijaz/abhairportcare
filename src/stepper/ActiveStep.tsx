@@ -1,10 +1,11 @@
 import { FlightDetailsStep } from "@/features/flight-details/FlightDetailsStep";
 import { PassengerDetailsStep } from "@/features/passenger-details/PassengerDetailsStep";
-import { AssistanceNeedsStep } from "@/features/assitance-needs/AssistanceNeedsStep";
+import { AssistanceNeedsStep } from "@/features/assistance-needs/AssistanceNeedsStep";
 import { requestFormOptions } from "@/form/request.options";
-import { withForm } from "@/components/Form/form";
+import { withForm } from "@/form/form";
 
 import { useStepper } from "./StepperContext";
+import { ReviewStep } from "@/features/review/ReviewStep";
 
 export const ActiveStep = withForm({
   ...requestFormOptions,
@@ -23,17 +24,7 @@ export const ActiveStep = withForm({
         return <AssistanceNeedsStep form={form} />;
 
       case "review":
-        return (
-          <div className="px-8 py-8">
-            <h1 className="text-2xl font-bold text-[#111a45]">
-              Review & Submit
-            </h1>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Review your assistance request before submitting.
-            </p>
-          </div>
-        );
+        return <ReviewStep form={form} />;
     }
   },
 });

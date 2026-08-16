@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { ChoiceCard } from "@/components/Form/ChoiceCard";
 import { FieldShell } from "@/components/Form/FieldShell";
-import { useFieldContext } from "@/components/Form/form-context";
+import { useFieldContext } from "@/form/form-context";
 
 import { getFieldPresentation } from "./field-presentation";
 

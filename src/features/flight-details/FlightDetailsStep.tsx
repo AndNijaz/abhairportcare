@@ -1,4 +1,4 @@
-import { withForm } from "@/components/Form/form";
+import { withForm } from "@/form/form";
 import {
   airlineOptions,
   airportOptions,

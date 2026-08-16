@@ -1,8 +1,8 @@
 import { createFormHook } from "@tanstack/react-form";
 
 import { ChoiceCardGroupField } from "@/components/FormField/ChoiceCardGroupField";
-import { NumberSelectField } from "@/components/FormField/NumberSelectField";
 import { CheckboxGroupField } from "@/components/FormField/CheckboxGroupField";
+import { NumberSelectField } from "@/components/FormField/NumberSelectField";
 import { PhoneField } from "@/components/FormField/PhoneField";
 import { RadioGroupField } from "@/components/FormField/RadioGroupField";
 import { SelectField } from "@/components/FormField/SelectField";

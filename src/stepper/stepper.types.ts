@@ -25,4 +25,8 @@ export type FormUiSnapshot = {
   assistance: {
     typeLabel: string;
   };
+
+  submission: {
+    isSubmitting: boolean;
+  };
 };

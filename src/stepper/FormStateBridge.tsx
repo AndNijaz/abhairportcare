@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "@tanstack/react-form";
 
-import { withForm } from "@/components/Form/form";
+import { withForm } from "@/form/form";
 import { assistanceTypeOptions } from "@/form/request.catalogs";
 import { requestFormOptions } from "@/form/request.options";
 
@@ -58,6 +58,11 @@ export const FormStateBridge = withForm({
       (state) => state.values.assistanceNeeds.primaryAssistanceType
     );
 
+    const isSubmitting = useSelector(
+      form.store,
+      (state) => state.isSubmitting
+    );
+
     useEffect(() => {
       const assistanceLabel =
         assistanceTypeOptions.find((option) => option.value === assistanceType)
@@ -86,6 +91,10 @@ export const FormStateBridge = withForm({
         assistance: {
           typeLabel: assistanceLabel,
         },
+
+        submission: {
+          isSubmitting,
+        },
       });
     }, [
       passengerName,
@@ -97,6 +106,7 @@ export const FormStateBridge = withForm({
       departureAirportCode,
       arrivalAirportCode,
       assistanceType,
+      isSubmitting,
       publishFormSnapshot,
     ]);
 

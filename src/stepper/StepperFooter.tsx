@@ -4,7 +4,10 @@ import { useStepper } from "./StepperContext";
 import { steps } from "./stepper.config";
 
 export function StepperFooter() {
-  const { activeStepIndex, isFirstStep, isLastStep, goBack } = useStepper();
+  const { activeStepIndex, isFirstStep, isLastStep, goBack, formSnapshot } =
+    useStepper();
+
+  const isSubmitting = formSnapshot.submission.isSubmitting;
 
   const activeStep = steps[activeStepIndex];
 
@@ -13,33 +16,32 @@ export function StepperFooter() {
       <button
         type="button"
         onClick={goBack}
-        disabled={isFirstStep}
+        disabled={isFirstStep || isSubmitting}
         className="flex items-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
       >
         <ArrowLeft className="h-4 w-4" />
         Back
       </button>
 
-      {!isLastStep && (
-        <button
-          type="submit"
-          form={activeStep.formId ?? undefined}
-          className="flex items-center gap-3 rounded-md bg-[#145dff] px-6 py-3 text-sm font-semibold text-white"
-        >
-          Continue
-          <ArrowRight className="h-4 w-4" />
-        </button>
-      )}
-
-      {isLastStep && (
-        <button
-          type="button"
-          disabled
-          className="rounded-md bg-[#145dff] px-6 py-3 text-sm font-semibold text-white opacity-50"
-        >
-          Submit Request
-        </button>
-      )}
+      <button
+        type="submit"
+        form={activeStep.formId ?? undefined}
+        disabled={isSubmitting}
+        className="flex items-center gap-3 rounded-md bg-[#145dff] px-6 py-3 text-sm font-semibold text-white shadow-[0_3px_8px_rgba(20,93,255,0.22)] transition hover:bg-[#0f52eb] disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {isSubmitting
+          ? "Submitting..."
+          : isLastStep
+            ? "Submit Request"
+            : "Continue"}
+        {!isSubmitting && (
+          <ArrowRight
+            aria-hidden="true"
+            className="h-4 w-4"
+            strokeWidth={1.8}
+          />
+        )}
+      </button>
     </div>
   );
 }

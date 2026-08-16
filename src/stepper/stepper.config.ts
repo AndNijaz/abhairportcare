@@ -26,6 +26,6 @@ export const steps: readonly StepDefinition[] = [
   {
     id: "review",
     label: "Review & Submit",
-    formId: null,
+    formId: stepFormIds.review,
   },
 ];

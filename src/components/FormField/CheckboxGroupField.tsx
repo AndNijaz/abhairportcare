@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/Form/Checkbox";
 import { CheckboxGroup } from "@/components/Form/CheckboxGroup";
-import { useFieldContext } from "@/components/Form/form-context";
+import { useFieldContext } from "@/form/form-context";
 
 type CheckboxGroupFieldProps<TValue extends string> = {
   label: string;

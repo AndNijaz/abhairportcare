@@ -18,7 +18,8 @@ export type StepperContextValue = {
   completeStep: (step: StepId) => void;
   goNext: () => void;
   goBack: () => void;
-  goToStep: (step: StepId) => void;
+  editStep: (step: StepId) => void;
+  resetFlow: () => void;
 
   getStepStatus: (step: StepId) => StepStatus;
 };
