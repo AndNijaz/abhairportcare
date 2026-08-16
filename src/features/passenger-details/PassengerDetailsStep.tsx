@@ -9,6 +9,7 @@ import {
   validatePhone,
 } from "@/form/request.schemas";
 import { stepFormIds } from "@/stepper/step-form-ids";
+import { StepValidityBridge } from "@/stepper/StepValidityBridge";
 import { useStepper } from "@/stepper/StepperContext";
 
 const passengerCountOptions = [
@@ -23,7 +24,7 @@ export const PassengerDetailsStep = withForm({
   ...requestFormOptions,
 
   render: function Render({ form }) {
-    const { completeStep, goNext } = useStepper();
+    const { blockStep, completeStep, goNext, unblockStep } = useStepper();
 
     return (
       <form.FormGroup
@@ -32,8 +33,12 @@ export const PassengerDetailsStep = withForm({
           onDynamic: ({ value }) => validatePassengerDetails(value),
         }}
         onGroupSubmit={() => {
+          unblockStep("passengerDetails");
           completeStep("passengerDetails");
           goNext();
+        }}
+        onGroupSubmitInvalid={() => {
+          blockStep("passengerDetails");
         }}
       >
         {(formGroup) => (
@@ -43,9 +48,14 @@ export const PassengerDetailsStep = withForm({
               event.preventDefault();
               event.stopPropagation();
 
-              formGroup.handleSubmit();
+              void formGroup.handleSubmit();
             }}
           >
+            <StepValidityBridge
+              step="passengerDetails"
+              isValid={formGroup.state.meta.isValid}
+            />
+
             <div className="px-8 py-8">
               <div>
                 <h1 className="text-2xl font-bold tracking-[-0.02em] text-[#111a45]">
@@ -62,7 +72,6 @@ export const PassengerDetailsStep = withForm({
                   name="passengerDetails.fullName"
                   validators={{
                     onChange: ({ value }) => validatePassengerName(value),
-                    onBlur: ({ value }) => validatePassengerName(value),
                   }}
                 >
                   {(field) => <field.TextField label="Full Name" required />}
@@ -72,7 +81,6 @@ export const PassengerDetailsStep = withForm({
                   name="passengerDetails.email"
                   validators={{
                     onChange: ({ value }) => validateEmail(value),
-                    onBlur: ({ value }) => validateEmail(value),
                   }}
                 >
                   {(field) => (
@@ -89,7 +97,6 @@ export const PassengerDetailsStep = withForm({
                     name="passengerDetails.phone"
                     validators={{
                       onChange: ({ value }) => validatePhone(value),
-                      onBlur: ({ value }) => validatePhone(value),
                     }}
                   >
                     {(field) => (
@@ -101,7 +108,6 @@ export const PassengerDetailsStep = withForm({
                     name="passengerDetails.passengerCount"
                     validators={{
                       onChange: ({ value }) => validatePassengerCount(value),
-                      onBlur: ({ value }) => validatePassengerCount(value),
                     }}
                   >
                     {(field) => (

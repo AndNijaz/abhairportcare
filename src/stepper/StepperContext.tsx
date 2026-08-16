@@ -12,9 +12,13 @@ export type StepperContextValue = {
   isFirstStep: boolean;
   isLastStep: boolean;
 
+  blockedStep: StepId | null;
+
   formSnapshot: FormUiSnapshot;
   publishFormSnapshot: (snapshot: FormUiSnapshot) => void;
 
+  blockStep: (step: StepId) => void;
+  unblockStep: (step: StepId) => void;
   completeStep: (step: StepId) => void;
   goNext: () => void;
   goBack: () => void;

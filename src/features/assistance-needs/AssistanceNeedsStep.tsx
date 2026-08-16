@@ -20,6 +20,7 @@ import {
   validateRequiredSelection,
 } from "@/form/request.schemas";
 import { stepFormIds } from "@/stepper/step-form-ids";
+import { StepValidityBridge } from "@/stepper/StepValidityBridge";
 import { useStepper } from "@/stepper/StepperContext";
 
 const assistanceIcons = {
@@ -40,7 +41,7 @@ export const AssistanceNeedsStep = withForm({
   ...requestFormOptions,
 
   render: function Render({ form }) {
-    const { completeStep, goNext } = useStepper();
+    const { blockStep, completeStep, goNext, unblockStep } = useStepper();
 
     return (
       <form.FormGroup
@@ -49,8 +50,12 @@ export const AssistanceNeedsStep = withForm({
           onDynamic: ({ value }) => validateAssistanceNeeds(value),
         }}
         onGroupSubmit={() => {
+          unblockStep("assistanceNeeds");
           completeStep("assistanceNeeds");
           goNext();
+        }}
+        onGroupSubmitInvalid={() => {
+          blockStep("assistanceNeeds");
         }}
       >
         {(formGroup) => (
@@ -60,9 +65,14 @@ export const AssistanceNeedsStep = withForm({
               event.preventDefault();
               event.stopPropagation();
 
-              formGroup.handleSubmit();
+              void formGroup.handleSubmit();
             }}
           >
+            <StepValidityBridge
+              step="assistanceNeeds"
+              isValid={formGroup.state.meta.isValid}
+            />
+
             <div className="px-8 py-8">
         <div>
           <h1 className="text-2xl font-bold tracking-[-0.02em] text-[#111a45]">
@@ -79,12 +89,6 @@ export const AssistanceNeedsStep = withForm({
             name="assistanceNeeds.primaryAssistanceType"
             validators={{
               onChange: ({ value }) =>
-                validateRequiredSelection(
-                  value,
-                  "Please select an assistance type."
-                ),
-
-              onBlur: ({ value }) =>
                 validateRequiredSelection(
                   value,
                   "Please select an assistance type."
@@ -132,9 +136,6 @@ export const AssistanceNeedsStep = withForm({
             name="assistanceNeeds.airportExitAssistance"
             validators={{
               onChange: ({ value }) =>
-                validateRequiredSelection(value, "Please select an option."),
-
-              onBlur: ({ value }) =>
                 validateRequiredSelection(value, "Please select an option."),
             }}
           >

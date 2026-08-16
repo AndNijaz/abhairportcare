@@ -4,12 +4,35 @@ import { useStepper } from "./StepperContext";
 import { steps } from "./stepper.config";
 
 export function StepperFooter() {
-  const { activeStepIndex, isFirstStep, isLastStep, goBack, formSnapshot } =
-    useStepper();
+  const {
+    activeStep: activeStepId,
+    activeStepIndex,
+    blockedStep,
+    isFirstStep,
+    isLastStep,
+    goBack,
+    formSnapshot,
+  } = useStepper();
 
   const isSubmitting = formSnapshot.submission.isSubmitting;
+  const isContinueDisabled = blockedStep === activeStepId;
+  const activeStepConfig = steps[activeStepIndex];
 
-  const activeStep = steps[activeStepIndex];
+  function handleContinue() {
+    if (!activeStepConfig.formId) {
+      return;
+    }
+
+    const activeStepForm = document.getElementById(activeStepConfig.formId);
+
+    if (!(activeStepForm instanceof HTMLFormElement)) {
+      throw new Error(
+        `Could not find the active step form: ${activeStepConfig.formId}`,
+      );
+    }
+
+    activeStepForm.requestSubmit();
+  }
 
   return (
     <div className="flex items-center justify-between border-t border-slate-200 px-8 py-5">
@@ -24,10 +47,10 @@ export function StepperFooter() {
       </button>
 
       <button
-        type="submit"
-        form={activeStep.formId ?? undefined}
-        disabled={isSubmitting}
-        className="flex items-center gap-3 rounded-md bg-[#145dff] px-6 py-3 text-sm font-semibold text-white shadow-[0_3px_8px_rgba(20,93,255,0.22)] transition hover:bg-[#0f52eb] disabled:cursor-not-allowed disabled:opacity-60"
+        type="button"
+        onClick={handleContinue}
+        disabled={isSubmitting || isContinueDisabled}
+        className="flex items-center gap-3 rounded-md bg-[#145dff] px-6 py-3 text-sm font-semibold text-white shadow-[0_3px_8px_rgba(20,93,255,0.22)] transition hover:bg-[#0f52eb] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none"
       >
         {isSubmitting
           ? "Submitting..."

@@ -5,6 +5,7 @@ export type FieldPresentationStatus =
 
 type FieldMeta = {
   isBlurred: boolean;
+  isTouched: boolean;
   isValid: boolean;
   errors: unknown[];
 };
@@ -32,20 +33,25 @@ export function getFieldPresentation(
   status: FieldPresentationStatus;
   message?: string;
 } {
-  if (!meta.isBlurred) {
+  const shouldShowError =
+    !meta.isValid &&
+    meta.errors.length > 0 &&
+    (meta.isBlurred || meta.isTouched);
+
+  if (shouldShowError) {
     return {
-      status: "default",
+      status: "error",
+      message: getErrorMessage(meta.errors[0]),
     };
   }
 
-  if (meta.isValid) {
+  if (meta.isBlurred && meta.isValid) {
     return {
       status: "success",
     };
   }
 
   return {
-    status: "error",
-    message: getErrorMessage(meta.errors[0]),
+    status: "default",
   };
 }

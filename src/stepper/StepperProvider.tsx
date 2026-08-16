@@ -32,6 +32,7 @@ type StepperProviderProps = {
 
 export function StepperProvider({ children }: StepperProviderProps) {
   const [activeStep, setActiveStep] = useState<StepId>("passengerDetails");
+  const [blockedStep, setBlockedStep] = useState<StepId | null>(null);
 
   const [formSnapshot, setFormSnapshot] =
     useState<FormUiSnapshot>(initialFormSnapshot);
@@ -46,6 +47,7 @@ export function StepperProvider({ children }: StepperProviderProps) {
 
   const resetFlow = useCallback(() => {
     setActiveStep("passengerDetails");
+    setBlockedStep(null);
     setCompletedSteps(new Set());
     setFormSnapshot(initialFormSnapshot);
   }, []);
@@ -61,7 +63,17 @@ export function StepperProvider({ children }: StepperProviderProps) {
     });
   }, []);
 
+  const blockStep = useCallback((step: StepId) => {
+    setBlockedStep(step);
+  }, []);
+
+  const unblockStep = useCallback((step: StepId) => {
+    setBlockedStep((current) => (current === step ? null : current));
+  }, []);
+
   const goNext = useCallback(() => {
+    setBlockedStep(null);
+
     setActiveStep((currentStep) => {
       const currentIndex = steps.findIndex((step) => step.id === currentStep);
 
@@ -70,6 +82,8 @@ export function StepperProvider({ children }: StepperProviderProps) {
   }, []);
 
   const goBack = useCallback(() => {
+    setBlockedStep(null);
+
     setActiveStep((currentStep) => {
       const currentIndex = steps.findIndex((step) => step.id === currentStep);
 
@@ -90,6 +104,7 @@ export function StepperProvider({ children }: StepperProviderProps) {
       return next;
     });
 
+    setBlockedStep(null);
     setActiveStep(step);
   }, []);
 
@@ -118,9 +133,13 @@ export function StepperProvider({ children }: StepperProviderProps) {
       isFirstStep: activeStepIndex === 0,
       isLastStep: activeStepIndex === steps.length - 1,
 
+      blockedStep,
+
       formSnapshot,
       publishFormSnapshot,
 
+      blockStep,
+      unblockStep,
       completeStep,
       goNext,
       goBack,
@@ -132,8 +151,11 @@ export function StepperProvider({ children }: StepperProviderProps) {
       activeStep,
       activeStepIndex,
       completedSteps,
+      blockedStep,
       formSnapshot,
       publishFormSnapshot,
+      blockStep,
+      unblockStep,
       completeStep,
       goNext,
       goBack,

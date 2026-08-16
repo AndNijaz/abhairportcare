@@ -12,13 +12,14 @@ import {
   validateRequiredValue,
 } from "@/form/request.schemas";
 import { stepFormIds } from "@/stepper/step-form-ids";
+import { StepValidityBridge } from "@/stepper/StepValidityBridge";
 import { useStepper } from "@/stepper/StepperContext";
 
 export const FlightDetailsStep = withForm({
   ...requestFormOptions,
 
   render: function Render({ form }) {
-    const { completeStep, goNext } = useStepper();
+    const { blockStep, completeStep, goNext, unblockStep } = useStepper();
 
     return (
       <form.FormGroup
@@ -27,8 +28,12 @@ export const FlightDetailsStep = withForm({
           onDynamic: ({ value }) => validateFlightDetails(value),
         }}
         onGroupSubmit={() => {
+          unblockStep("flightDetails");
           completeStep("flightDetails");
           goNext();
+        }}
+        onGroupSubmitInvalid={() => {
+          blockStep("flightDetails");
         }}
       >
         {(formGroup) => (
@@ -38,9 +43,14 @@ export const FlightDetailsStep = withForm({
               event.preventDefault();
               event.stopPropagation();
 
-              formGroup.handleSubmit();
+              void formGroup.handleSubmit();
             }}
           >
+            <StepValidityBridge
+              step="flightDetails"
+              isValid={formGroup.state.meta.isValid}
+            />
+
             <div className="px-8 py-8">
         <div>
           <h1 className="text-2xl font-bold tracking-[-0.02em] text-[#111a45]">
@@ -59,8 +69,6 @@ export const FlightDetailsStep = withForm({
               validators={{
                 onChange: ({ value }) =>
                   validateRequiredSelection(value, "Please select an airline."),
-                onBlur: ({ value }) =>
-                  validateRequiredSelection(value, "Please select an airline."),
               }}
             >
               {(field) => (
@@ -77,7 +85,6 @@ export const FlightDetailsStep = withForm({
               name="flightDetails.flightNumber"
               validators={{
                 onChange: ({ value }) => validateFlightNumber(value),
-                onBlur: ({ value }) => validateFlightNumber(value),
               }}
             >
               {(field) => (
@@ -95,11 +102,6 @@ export const FlightDetailsStep = withForm({
               name="flightDetails.departureAirportCode"
               validators={{
                 onChange: ({ value }) =>
-                  validateRequiredSelection(
-                    value,
-                    "Please select a departure airport."
-                  ),
-                onBlur: ({ value }) =>
                   validateRequiredSelection(
                     value,
                     "Please select a departure airport."
@@ -124,11 +126,6 @@ export const FlightDetailsStep = withForm({
                     value,
                     "Please select an arrival airport."
                   ),
-                onBlur: ({ value }) =>
-                  validateRequiredSelection(
-                    value,
-                    "Please select an arrival airport."
-                  ),
               }}
             >
               {(field) => (
@@ -148,8 +145,6 @@ export const FlightDetailsStep = withForm({
               validators={{
                 onChange: ({ value }) =>
                   validateRequiredValue(value, "Departure date is required."),
-                onBlur: ({ value }) =>
-                  validateRequiredValue(value, "Departure date is required."),
               }}
             >
               {(field) => (
@@ -161,8 +156,6 @@ export const FlightDetailsStep = withForm({
               name="flightDetails.departureTime"
               validators={{
                 onChange: ({ value }) =>
-                  validateRequiredValue(value, "Departure time is required."),
-                onBlur: ({ value }) =>
                   validateRequiredValue(value, "Departure time is required."),
               }}
             >
@@ -177,8 +170,6 @@ export const FlightDetailsStep = withForm({
               name="flightDetails.terminal"
               validators={{
                 onChange: ({ value }) =>
-                  validateRequiredValue(value, "Terminal is required."),
-                onBlur: ({ value }) =>
                   validateRequiredValue(value, "Terminal is required."),
               }}
             >
@@ -196,11 +187,6 @@ export const FlightDetailsStep = withForm({
             name="flightDetails.connectionType"
             validators={{
               onChange: ({ value }) =>
-                validateRequiredSelection(
-                  value,
-                  "Please select your connection type."
-                ),
-              onBlur: ({ value }) =>
                 validateRequiredSelection(
                   value,
                   "Please select your connection type."
